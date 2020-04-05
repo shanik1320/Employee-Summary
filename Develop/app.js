@@ -17,7 +17,15 @@ const allEmployees = [];
 
 const makingTeam = () => {
     inquirer
-        .then
+        .prompt([
+            {
+            type: "list",
+            message: "Do you need a manager?",
+            choices: ["yes", "no"],
+            name: "manager"
+            }
+
+        ])
 }
 
 const addEmployee = () => {

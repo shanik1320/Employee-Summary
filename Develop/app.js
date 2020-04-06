@@ -32,11 +32,16 @@ const addEmployee = () => {
     inquirer
     .prompt([
         {
-            
+         type: "list",
+         message: "Which employee would you like to add?",
+         choices: ["Engineer", "Intern"],
+         name: "employee"
         }
+        // if(addEmployee === Engineer)
+        // .then(funtion(addEngineer)
     ])
 
-}
+    }
 
 const addEngineer = () => {
     inquirer

@@ -37,8 +37,9 @@ const addEmployee = () => {
          choices: ["Engineer", "Intern"],
          name: "employee"
         }
-        // if(addEmployee === Engineer)
-        // .then(funtion(addEngineer)
+        if(addEmployee === Engineer) {
+            console.log(Engineer)
+        }
     ])
 
     }

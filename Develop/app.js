@@ -14,7 +14,7 @@ const renderArray = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-//const allEmployees = [];
+// const allEmployees = [];
 
 const makingTeam = () => {
     inquirer
@@ -132,12 +132,28 @@ const addIntern = () => {
 
 
 const buildTeam = () => {
-
-    const html = render(renderArray);
-    fs.writeFile(outputPath, html, err => {
+    inquirer
+    .prompt([
+        {
+            type: "list",
+            message: "Would you like to add more employees?"
+            choices: ["yes", "no"],
+            name: "more"
+        },
+        const html = render(renderArray);
+    fs.writeFile(outputPath, renderArray, err => {
         if (err) throw err;
         console.log("success!");
     })
+           
+    ])
+    .then(answer => {
+        if (answer.manager === "no") {
+            buildTeam();
+        }else(addEmployee);
+
+
+    
 
 }
 

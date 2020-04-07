@@ -68,6 +68,11 @@ const addEmployee = () => {
                 addEngineer();
             }
         })
+        .then(answer => {
+            if(answer.employee === "Intern") {
+                addIntern();
+            }
+        })
 }
 const addEngineer = () => {
     inquirer

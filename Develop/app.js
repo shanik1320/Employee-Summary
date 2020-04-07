@@ -42,10 +42,9 @@ const makingTeam = () => {
 
         ])
         .then(answer => {
-            const manager = new Manager (answer.name, answer.id, answer.officeNumber, answer.email);
+            const manager = new Manager(answer.name, answer.id, answer.officeNumber, answer.email);
             renderArray.push(manager)
             addEmployee()
-            }
 
 
         })
@@ -58,22 +57,24 @@ const addEmployee = () => {
             {
                 type: "list",
                 message: "Do you want to add another employee?",
-                choices: ["Engineer", "Intern", "Manager"],
+                choices: ["Engineer", "Intern", "Manager", "I'm done"],
                 name: "employee"
             }
         ])
         .then(answer => {
             if (answer.employee === "Engineer") {
-                console.log("Engineer")
                 addEngineer();
-            }
-        })
-        .then(answer => {
-            if (answer.employee === "Intern") {
+            } else if (answer.employee === "Intern") {
                 addIntern();
+            } else if (answer.employee === "Manager") {
+                makingTeam();
+            } else {
+                buildTeam()
             }
+
         })
-        
+
+
 }
 const addEngineer = () => {
     inquirer
@@ -99,6 +100,14 @@ const addEngineer = () => {
                 name: "githubUsername"
             }
         ])
+        .then(answer => {
+            const engineer = new Engineer(answer.name, answer.id, answer.email, answer.githubUsername);
+            renderArray.push(engineer)
+            addEmployee()
+
+
+        })
+
 
 }
 
@@ -128,31 +137,27 @@ const addIntern = () => {
             }
 
         ])
+        .then(answer => {
+            const intern = new Intern(answer.name, answer.id, answer.email, answer.school);
+            renderArray.push(intern)
+            addEmployee()
+
+
+        })
+
 
 }
 
 
 const buildTeam = () => {
-    inquirer
-        .prompt([
-            {
-                type: "list",
-                message: "Would you like to add more employees?",
-                choices: ["yes", "no"],
-                name: "more"
-            },  
-    
-    .then(answer => {
-                if (answer.manager === "no") {
-                    buildTeam();
-                } else (addEmployee);
-        ])
+    fs.writeFileSync(outputPath, render(renderArray), "utf8")
+
 }
 
-const html = render(renderArray);
-fs.writeFile(outputPath, html, err => {
-    if (err) throw err;
-    console.log("success!");
+// const html = render(renderArray);
+// fs.writeFile(outputPath, html, err => {
+//     if (err) throw err;
+//     console.log("success!");
 
     makingTeam();
 
@@ -176,4 +181,4 @@ fs.writeFile(outputPath, html, err => {
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an 
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!```
+// for the provided `render` function to work!``

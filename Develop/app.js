@@ -20,31 +20,31 @@ const makingTeam = () => {
     inquirer
         .prompt([
             {
-                type: "list",
-                message: "Do you need a manager?",
-                choices: ["yes", "no"],
-                name: "manager"
-            },
-            {
                 type: "input",
                 message: "what is the manager's name?",
                 name: "name"
-             },
-             {
-                 type: "input",
-                 message: "What is the id?",
-                 name: "id"
-             },
-             {
-                 type: "input",
-                 message: "What is the manager's office number?",
-                 name: "officeNumber"
-             }
+            },
+            {
+                type: "input",
+                message: "What is the id?",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is the manager's office number?",
+                name: "officeNumber"
+            },
+            {
+                type: "input",
+                message: "What is the manager's email?",
+                name: "email"
+            }
 
         ])
         .then(answer => {
-            if (answer.manager === "yes") {
-                addEmployee();
+            const manager = new Manager (answer.name, answer.id, answer.officeNumber, answer.email);
+            renderArray.push(manager)
+            addEmployee()
             }
 
 
@@ -57,8 +57,8 @@ const addEmployee = () => {
         .prompt([
             {
                 type: "list",
-                message: "Which employee would you like to add?",
-                choices: ["Engineer", "Intern"],
+                message: "Do you want to add another employee?",
+                choices: ["Engineer", "Intern", "Manager"],
                 name: "employee"
             }
         ])
@@ -69,10 +69,11 @@ const addEmployee = () => {
             }
         })
         .then(answer => {
-            if(answer.employee === "Intern") {
+            if (answer.employee === "Intern") {
                 addIntern();
             }
         })
+        
 }
 const addEngineer = () => {
     inquirer
@@ -133,31 +134,27 @@ const addIntern = () => {
 
 const buildTeam = () => {
     inquirer
-    .prompt([
-        {
-            type: "list",
-            message: "Would you like to add more employees?"
-            choices: ["yes", "no"],
-            name: "more"
-        },
-        const html = render(renderArray);
-    fs.writeFile(outputPath, renderArray, err => {
-        if (err) throw err;
-        console.log("success!");
-    })
-           
-    ])
-    .then(answer => {
-        if (answer.manager === "no") {
-            buildTeam();
-        }else(addEmployee);
-
-
+        .prompt([
+            {
+                type: "list",
+                message: "Would you like to add more employees?",
+                choices: ["yes", "no"],
+                name: "more"
+            },  
     
-
+    .then(answer => {
+                if (answer.manager === "no") {
+                    buildTeam();
+                } else (addEmployee);
+        ])
 }
 
-makingTeam();
+const html = render(renderArray);
+fs.writeFile(outputPath, html, err => {
+    if (err) throw err;
+    console.log("success!");
+
+    makingTeam();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will

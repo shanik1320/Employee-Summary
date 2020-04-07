@@ -9,65 +9,90 @@ const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const renderArray = [];
 
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const allEmployees = [];
+//const allEmployees = [];
 
 const makingTeam = () => {
     inquirer
         .prompt([
             {
-            type: "list",
-            message: "Do you need a manager?",
-            choices: ["yes", "no"],
-            name: "manager"
-            }
+                type: "list",
+                message: "Do you need a manager?",
+                choices: ["yes", "no"],
+                name: "manager"
+            },
+            {
+                type: "input",
+                message: "what is the manager's name?",
+                name: "name"
+             },
+             {
+                 type: "input",
+                 message: "What is the id?",
+                 name: "id"
+             },
+             {
+                 type: "input",
+                 message: "What is the manager's office number?",
+                 name: "officeNumber"
+             }
 
         ])
+        .then(answer => {
+            if (answer.manager === "yes") {
+                addEmployee();
+            }
+
+
+        })
+
 }
 
 const addEmployee = () => {
     inquirer
-    .prompt([
-        {
-         type: "list",
-         message: "Which employee would you like to add?",
-         choices: ["Engineer", "Intern"],
-         name: "employee"
-        }
-        if(addEmployee === Engineer) {
-            console.log(Engineer)
-        }
-    ])
-
-    }
-
+        .prompt([
+            {
+                type: "list",
+                message: "Which employee would you like to add?",
+                choices: ["Engineer", "Intern"],
+                name: "employee"
+            }
+        ])
+        .then(answer => {
+            if (answer.employee === "Engineer") {
+                console.log("Engineer")
+                addEngineer();
+            }
+        })
+}
 const addEngineer = () => {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            message: "What is the engineer's name?",
-            name: "name"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's id?",
-            name: "id"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's email",
-            name: "email"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's GitHub username?",
-            name: "githubUsername"
-        }
-    ])
+        .prompt([
+            {
+                type: "input",
+                message: "What is the engineer's name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "What is the engineer's id?",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is the engineer's email",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "What is the engineer's GitHub username?",
+                name: "githubUsername"
+            }
+        ])
 
 }
 
@@ -100,7 +125,14 @@ const addIntern = () => {
 
 }
 
+
 const buildTeam = () => {
+
+    const html = render(renderArray);
+    fs.writeFile(outputPath, html, err => {
+        if (err) throw err;
+        console.log("success!");
+    })
 
 }
 
@@ -110,11 +142,7 @@ makingTeam();
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-const renderArray = [];
-const html = render(renderArray);
-fs.writeFile(outputPath, html, err => {
 
-})
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
